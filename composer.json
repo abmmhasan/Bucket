@@ -1,0 +1,22 @@
+{
+  "name": "abmmhasan/bucket",
+  "description": "PHP array functions",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "abmmhasan",
+      "email": "abmmhasan346@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "AbmmHasan\\Bucket\\": "src/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": ">=8.0"
+  }
+}
