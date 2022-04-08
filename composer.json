@@ -10,6 +10,9 @@
     }
   ],
   "autoload": {
+    "files": [
+      "src/function.php"
+    ],
     "psr-4": {
       "AbmmHasan\\Bucket\\": "src/"
     }
