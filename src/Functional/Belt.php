@@ -11,7 +11,7 @@ class Belt implements ArrayAccess, Iterator, Countable, JsonSerializable
 {
     use Common;
 
-    private array $hooks;
+    protected array $hooks;
 
     /**
      * Gets an item at the offset.

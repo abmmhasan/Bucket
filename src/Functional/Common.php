@@ -98,7 +98,7 @@ trait Common
     }
 
     /**
-     * Results array of items from Collection or Arrayable.
+     * Results array of items from Arrayable Collection.
      *
      * @param mixed $items
      * @return array

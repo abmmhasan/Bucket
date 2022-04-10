@@ -9,16 +9,18 @@ class Config
     protected static array $items = [];
 
     /**
-     * Load configuration file from a path
+     * Load Configuration array or Configuration file from a path
      *
-     * @param $path
-     * @return void
+     * @param array|string $pathOrResource
+     * @return bool
      */
-    public static function load($path)
+    public static function load(array|string $pathOrResource): bool
     {
         if (count(self::$items) === 0) {
-            self::$items = require($path);
+            self::$items = is_array($pathOrResource) ? $pathOrResource : require($pathOrResource);
+            return true;
         }
+        return false;
     }
 
     /**
