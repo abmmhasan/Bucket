@@ -47,7 +47,7 @@ if (!function_exists('config')) {
      */
     function config(array|int|string $keys = null, mixed $default = null): mixed
     {
-        if (is_null($keys)) {
+        if ($keys === null) {
             return Config::class;
         }
         if (is_array($keys)) {

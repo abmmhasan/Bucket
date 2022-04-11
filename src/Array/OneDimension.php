@@ -112,7 +112,7 @@ class OneDimension
      */
     public static function shuffle(array $array, int $seed = null): array
     {
-        if (is_null($seed)) {
+        if ($seed === null) {
             shuffle($array);
         } else {
             mt_srand($seed);

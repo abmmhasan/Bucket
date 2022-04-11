@@ -104,7 +104,7 @@ class Dotted
         if (empty($array)) {
             return $default;
         }
-        if (is_null($keys)) {
+        if ($keys === null) {
             return $array;
         }
         if (is_array($keys)) {
@@ -185,7 +185,7 @@ class Dotted
      */
     public static function add(array &$array, string|int|float $key, mixed $value): bool
     {
-        if (is_null(self::get($array, $key))) {
+        if (self::get($array, $key) === null) {
             self::set($array, $key, $value);
             return true;
         }
@@ -216,7 +216,7 @@ class Dotted
      */
     public static function append(array &$array, mixed $value, string $key = null)
     {
-        if (!is_null($key)) {
+        if ($key !== null) {
             $process = self::get($array, $key);
         } else {
             $process = $array;

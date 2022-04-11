@@ -17,7 +17,9 @@ class Config
     public static function load(array|string $pathOrResource): bool
     {
         if (count(self::$items) === 0) {
-            self::$items = is_array($pathOrResource) ? $pathOrResource : require($pathOrResource);
+            self::$items = is_array($pathOrResource)
+                ? $pathOrResource
+                : include($pathOrResource);
             return true;
         }
         return false;
