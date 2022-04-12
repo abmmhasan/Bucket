@@ -129,7 +129,7 @@ class Dotted
      */
     public static function set(array &$array, array|string $keys = null, mixed $default = null): bool
     {
-        if (is_null($keys)) {
+        if ($keys === null) {
             return $array = $default;
         }
         $keys = is_array($keys) ? $keys : [$keys => $default];

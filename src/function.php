@@ -1,6 +1,7 @@
 <?php
 
 use AbmmHasan\Bucket\Config\Config;
+use AbmmHasan\Bucket\Config\Formation;
 
 if (!function_exists('compare')) {
     /**
@@ -54,5 +55,24 @@ if (!function_exists('config')) {
             return Config::set($keys);
         }
         return Config::get($keys, $default);
+    }
+}
+if (!function_exists('formation')) {
+    /**
+     * Determine if the given value is callable, but not a string.
+     *
+     * @param array|int|string|null $key
+     * @param mixed|null $default
+     * @return mixed
+     */
+    function formation(array|int|string $key = null, mixed $default = null): mixed
+    {
+        if ($key === null) {
+            return Formation::class;
+        }
+        if (is_array($key)) {
+            return Formation::set(key($key), current($key));
+        }
+        return Formation::get($key, $default);
     }
 }

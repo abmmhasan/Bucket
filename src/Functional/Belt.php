@@ -42,11 +42,11 @@ class Belt implements ArrayAccess, Iterator, Countable, JsonSerializable
     /**
      * Set on-get rule
      *
-     * @param mixed $offset
+     * @param string $offset
      * @param callable $callback
      * @return $this
      */
-    public function onGet(mixed $offset, callable $callback): static
+    public function onGet(string $offset, callable $callback): static
     {
         return $this->addHook($offset, 'get', $callback);
     }
@@ -54,11 +54,11 @@ class Belt implements ArrayAccess, Iterator, Countable, JsonSerializable
     /**
      * Set on-set rule
      *
-     * @param mixed $offset
+     * @param string $offset
      * @param callable $callback
      * @return $this
      */
-    public function onSet(mixed $offset, callable $callback): static
+    public function onSet(string $offset, callable $callback): static
     {
         return $this->addHook($offset, 'set', $callback);
     }

@@ -9,20 +9,43 @@ class Config
     protected static array $items = [];
 
     /**
-     * Load Configuration array or Configuration file from a path
+     * Load Configuration file from a path
      *
-     * @param array|string $pathOrResource
+     * @param string $path
      * @return bool
      */
-    public static function load(array|string $pathOrResource): bool
+    public static function loadFile(string $path): bool
     {
-        if (count(self::$items) === 0) {
-            self::$items = is_array($pathOrResource)
-                ? $pathOrResource
-                : include($pathOrResource);
+        if (count(static::$items) === 0 && file_exists($path)) {
+            static::$items = include($path);
             return true;
         }
         return false;
+    }
+
+    /**
+     * Load Configuration array
+     *
+     * @param array $resource
+     * @return bool
+     */
+    public static function loadArray(array $resource): bool
+    {
+        if (count(static::$items) === 0) {
+            static::$items = $resource;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Get all the configuration
+     *
+     * @return array
+     */
+    public function all(): array
+    {
+        return self::$items;
     }
 
     /**
@@ -46,16 +69,6 @@ class Config
     public static function get(array|int|string $keys = null, mixed $default = null): mixed
     {
         return Dotted::get(self::$items, $keys, $default);
-    }
-
-    /**
-     * Get all the configuration
-     *
-     * @return array
-     */
-    public function all(): array
-    {
-        return self::$items;
     }
 
     /**

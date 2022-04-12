@@ -143,7 +143,7 @@ class MultiDimension
      */
     public static function first(array $array, callable $callback = null, mixed $default = null): mixed
     {
-        if (is_null($callback)) {
+        if ($callback === null) {
             if (empty($array)) {
                 return $default;
             }
@@ -171,7 +171,7 @@ class MultiDimension
      */
     public static function last(array $array, callable $callback = null, mixed $default = null): mixed
     {
-        if (is_null($callback)) {
+        if ($callback === null) {
             return empty($array) ? $default : end($array);
         }
         return self::first(array_reverse($array, true), $callback, $default);
@@ -213,7 +213,7 @@ class MultiDimension
      */
     public static function whereCallback(array $array, callable $callback = null, mixed $default = null): mixed
     {
-        if (is_null($callback)) {
+        if ($callback === null) {
             if (empty($array)) {
                 return $default;
             }
