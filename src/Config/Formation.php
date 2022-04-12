@@ -44,7 +44,7 @@ class Formation
      *
      * @return array
      */
-    public function all(): array
+    public static function all(): array
     {
         return static::$items;
     }
