@@ -159,6 +159,42 @@ trait Common
     }
 
     /**
+     * Get the collection of items as a plain array.
+     *
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return array_map(
+            function ($value) {
+                return $value;
+            },
+            $this->data
+        );
+    }
+
+    /**
+     * Get the collection of items as JSON.
+     *
+     * @param int $options
+     * @return string
+     */
+    public function toJson(int $options = 0): string
+    {
+        return json_encode($this->data, $options);
+    }
+
+    /**
+     * Convert the collection to its string representation.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->toJson();
+    }
+
+    /**
      * Determine if the collection is empty or not.
      *
      * @return bool
@@ -223,27 +259,6 @@ trait Common
     public function offsetUnset(mixed $offset)
     {
         unset($this->data[$offset]);
-    }
-
-    /**
-     * Get the collection of items as JSON.
-     *
-     * @param int $options
-     * @return string
-     */
-    public function toJson(int $options = 0): string
-    {
-        return json_encode($this->data, $options);
-    }
-
-    /**
-     * Convert the collection to its string representation.
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->toJson();
     }
 
     /**
