@@ -40,13 +40,13 @@ if (!function_exists('isCallable')) {
 }
 if (!function_exists('config')) {
     /**
-     * Determine if the given value is callable, but not a string.
+     * Get/Set configuration or Get instance of Config.
      *
      * @param array|int|string|null $keys
      * @param mixed|null $default
-     * @return mixed
+     * @return Config|mixed
      */
-    function config(array|int|string $keys = null, mixed $default = null): mixed
+    function config(array|int|string $keys = null, mixed $default = null)
     {
         if ($keys === null) {
             return Config::class;
@@ -59,13 +59,13 @@ if (!function_exists('config')) {
 }
 if (!function_exists('formation')) {
     /**
-     * Determine if the given value is callable, but not a string.
+     * Get/Set configuration using Formation or Get instance of Formation.
      *
      * @param array|int|string|null $key
      * @param mixed|null $default
-     * @return mixed
+     * @return Formation|mixed
      */
-    function formation(array|int|string $key = null, mixed $default = null): mixed
+    function formation(array|int|string $key = null, mixed $default = null)
     {
         if ($key === null) {
             return Formation::class;
