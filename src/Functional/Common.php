@@ -37,7 +37,7 @@ trait Common
      * @param string $key Key
      * @param mixed $value Value
      */
-    public function __set(string $key, mixed $value)
+    public function __set(string $key, mixed $value): void
     {
         $this->offsetSet($key, $value);
     }
@@ -48,7 +48,7 @@ trait Common
      * @param string $key Key
      * @return bool Item status
      */
-    public function __isset(string $key)
+    public function __isset(string $key): bool
     {
         return $this->offsetExists($key);
     }
@@ -58,7 +58,7 @@ trait Common
      *
      * @param string $key Key
      */
-    public function __unset(string $key)
+    public function __unset(string $key): void
     {
         $this->offsetUnset($key);
     }
@@ -231,7 +231,7 @@ trait Common
      * @param mixed $offset Offset
      * @param mixed $value Value
      */
-    public function offsetSet(mixed $offset, mixed $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if ($offset === null) {
             $this->data[] = $value;
@@ -256,7 +256,7 @@ trait Common
      *
      * @param mixed $offset Offset
      */
-    public function offsetUnset(mixed $offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->data[$offset]);
     }
@@ -264,7 +264,7 @@ trait Common
     /**
      * Resets the collection.
      */
-    public function rewind()
+    public function rewind(): void
     {
         reset($this->data);
     }
@@ -292,11 +292,10 @@ trait Common
     /**
      * Gets the next collection value.
      *
-     * @return mixed Value
      */
-    public function next(): mixed
+    public function next(): void
     {
-        return next($this->data);
+        next($this->data);
     }
 
     /**
@@ -332,7 +331,7 @@ trait Common
     /**
      * Removes all items from the collection.
      */
-    public function clear()
+    public function clear(): void
     {
         $this->data = [];
     }
