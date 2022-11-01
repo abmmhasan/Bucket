@@ -67,9 +67,9 @@ trait Common
      * Add more data to the existing collection
      *
      * @param Arrject|Belt|array $data
-     * @return mixed
+     * @return Arrject|Belt
      */
-    public function merge(Arrject|Belt|array $data): mixed
+    public function merge(Arrject|Belt|array $data): Arrject|Belt
     {
         $this->data = array_merge($this->data, $data);
         return $this;
@@ -79,9 +79,9 @@ trait Common
      * Filter exiting data by callback
      *
      * @param callable $callback
-     * @return mixed
+     * @return Arrject|Belt
      */
-    public function filter(callable $callback): mixed
+    public function filter(callable $callback): Arrject|Belt
     {
         return $this->setData(array_filter($this->data, $callback));
     }
@@ -90,9 +90,9 @@ trait Common
      * Map data by callback
      *
      * @param callable $callback
-     * @return mixed
+     * @return Arrject|Belt
      */
-    public function map(callable $callback): mixed
+    public function map(callable $callback): Arrject|Belt
     {
         return $this->setData(array_map($callback, $this->data));
     }
@@ -122,9 +122,9 @@ trait Common
      * Sets the collection data.
      *
      * @param array $data
-     * @return Common|Arrject|Belt
+     * @return Arrject|Belt
      */
-    public function setData(array $data): self
+    public function setData(array $data): Arrject|Belt
     {
         $this->data = $data;
         return $this;
