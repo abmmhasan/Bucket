@@ -40,7 +40,7 @@ if (!function_exists('isCallable')) {
 }
 if (!function_exists('config')) {
     /**
-     * Get/Set configuration or Get instance of Config.
+     * Get/Set configuration or Get instance of ConfigTrait.
      *
      * @param array|int|string|null $keys
      * @param mixed|null $default

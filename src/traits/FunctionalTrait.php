@@ -1,12 +1,14 @@
 <?php
 
-namespace AbmmHasan\Bucket\Functional;
+namespace AbmmHasan\Bucket\traits;
 
+use AbmmHasan\Bucket\Functional\Arrject;
+use AbmmHasan\Bucket\Functional\Belt;
 use ArrayIterator;
 use JsonSerializable;
 use Traversable;
 
-trait Common
+trait FunctionalTrait
 {
     protected array $data = [];
 
