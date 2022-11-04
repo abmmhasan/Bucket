@@ -1,10 +1,10 @@
 <?php
 
-namespace AbmmHasan\Bucket\traits;
+namespace AbmmHasan\Bucket\Config;
 
 use AbmmHasan\Bucket\Array\Dotted;
 
-trait ConfigTrait
+trait Common
 {
     protected array $items = [];
 

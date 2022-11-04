@@ -3,13 +3,12 @@
 namespace AbmmHasan\Bucket\Config;
 
 use AbmmHasan\Bucket\Array\Dotted;
-use AbmmHasan\Bucket\traits\ConfigTrait;
 use AbmmHasan\Bucket\traits\Hook;
 use AbmmHasan\OOF\Fence\Multi;
 
 class Formation
 {
-    use ConfigTrait, Multi, Hook;
+    use Common, Multi, Hook;
 
     /**
      * Get configuration by key

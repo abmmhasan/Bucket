@@ -2,7 +2,6 @@
 
 namespace AbmmHasan\Bucket\Functional;
 
-use AbmmHasan\Bucket\traits\FunctionalTrait;
 use AbmmHasan\Bucket\traits\Hook;
 use ArrayAccess;
 use Countable;
@@ -11,7 +10,7 @@ use JsonSerializable;
 
 class Belt implements ArrayAccess, Iterator, Countable, JsonSerializable
 {
-    use FunctionalTrait, Hook;
+    use Common, Hook;
 
     /**
      * Gets an item at the offset.

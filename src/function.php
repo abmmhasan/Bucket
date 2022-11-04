@@ -45,16 +45,17 @@ if (!function_exists('config')) {
      * @param array|int|string|null $keys
      * @param mixed|null $default
      * @return Config|mixed
+     * @throws Exception
      */
     function config(array|int|string $keys = null, mixed $default = null)
     {
         if ($keys === null) {
-            return Config::class;
+            return Config::instance();
         }
         if (is_array($keys)) {
-            return Config::set($keys);
+            return Config::instance()->set($keys);
         }
-        return Config::get($keys, $default);
+        return Config::instance()->get($keys, $default);
     }
 }
 if (!function_exists('formation')) {
@@ -64,15 +65,16 @@ if (!function_exists('formation')) {
      * @param array|int|string|null $key
      * @param mixed|null $default
      * @return Formation|mixed
+     * @throws Exception
      */
     function formation(array|int|string $key = null, mixed $default = null)
     {
         if ($key === null) {
-            return Formation::class;
+            return Formation::instance();
         }
         if (is_array($key)) {
-            return Formation::set(key($key), current($key));
+            return Formation::instance()->set(key($key), current($key));
         }
-        return Formation::get($key, $default);
+        return Formation::instance()->get($key, $default);
     }
 }
