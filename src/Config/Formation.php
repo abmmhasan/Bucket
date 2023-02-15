@@ -4,7 +4,7 @@ namespace AbmmHasan\Bucket\Config;
 
 use AbmmHasan\Bucket\Array\Dotted;
 use AbmmHasan\Bucket\traits\Hook;
-use AbmmHasan\OOF\Fence\Multi;
+use AbmmHasan\InterMix\Fence\Multi;
 
 class Formation
 {

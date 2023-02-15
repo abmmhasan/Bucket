@@ -21,6 +21,6 @@
   "prefer-stable": true,
   "require": {
     "php": ">=8.0",
-    "abmmhasan/oof": "dev-main"
+    "abmmhasan/intermix": "dev-main"
   }
 }

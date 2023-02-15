@@ -73,7 +73,7 @@ class OneDimension
      */
     public static function prepend(array $array, mixed $value, mixed $key = null): array
     {
-        if (func_num_args() == 2) {
+        if ($key === null) {
             array_unshift($array, $value);
         } else {
             $array = [$key => $value] + $array;

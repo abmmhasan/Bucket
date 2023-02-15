@@ -3,7 +3,7 @@
 namespace AbmmHasan\Bucket\Config;
 
 
-use AbmmHasan\OOF\Fence\Multi;
+use AbmmHasan\InterMix\Fence\Multi;
 
 class Config
 {
