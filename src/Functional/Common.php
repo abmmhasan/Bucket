@@ -28,7 +28,7 @@ trait Common
      */
     public function __get(string $key)
     {
-        return $this->offsetGet($key) ?? null;
+        return $this->offsetGet($key);
     }
 
     /**
@@ -76,25 +76,55 @@ trait Common
     }
 
     /**
-     * Filter exiting data by callback
-     *
-     * @param callable $callback
-     * @return Arrject|Belt
-     */
-    public function filter(callable $callback): Arrject|Belt
-    {
-        return $this->setData(array_filter($this->data, $callback));
-    }
-
-    /**
      * Map data by callback
      *
      * @param callable $callback
-     * @return Arrject|Belt
+     * @return array
      */
-    public function map(callable $callback): Arrject|Belt
+    public function map(callable $callback): array
     {
-        return $this->setData(array_map($callback, $this->data));
+        return array_map($callback, $this->data);
+    }
+
+    public static function fromMap(array $items, callable $fn): static
+    {
+        return new static(array_map($fn, $items));
+    }
+
+    public function reduce(callable $fn, mixed $initial): mixed
+    {
+        return array_reduce($this->data, $fn, $initial);
+    }
+
+    public function each(callable $fn): void
+    {
+        array_walk($this->data, $fn);
+    }
+
+    public function exists(callable $fn): bool
+    {
+        foreach ($this->data as $index => $element) {
+            if ($fn($element, $index, $this->data)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function filter(callable $fn): static
+    {
+        return new static(array_filter($this->data, $fn, ARRAY_FILTER_USE_BOTH));
+    }
+
+    public function first(): mixed
+    {
+        return reset($this->data);
+    }
+
+    public function last(): mixed
+    {
+        return end($this->data);
     }
 
     /**
@@ -105,17 +135,12 @@ trait Common
      */
     public function getArrayableItems(mixed $items): array
     {
-        if (is_array($items)) {
-            return $items;
-        } elseif ($items instanceof self) {
-            return $items->getData();
-        } elseif ($items instanceof JsonSerializable) {
-            return $items->jsonSerialize();
-        } elseif ($items instanceof Traversable) {
-            return iterator_to_array($items);
-        }
-
-        return (array)$items;
+        return match (true) {
+            $items instanceof self => $items->items(),
+            $items instanceof JsonSerializable => $items->jsonSerialize(),
+            $items instanceof Traversable => iterator_to_array($items),
+            default => (array)$items
+        };
     }
 
     /**
@@ -130,12 +155,17 @@ trait Common
         return $this;
     }
 
+    public function values(): array
+    {
+        return array_values($this->data);
+    }
+
     /**
      * Gets the collection data.
      *
      * @return array Collection data
      */
-    public function getData(): array
+    public function items(): array
     {
         return $this->data;
     }
@@ -165,12 +195,7 @@ trait Common
      */
     public function toArray(): array
     {
-        return array_map(
-            function ($value) {
-                return $value;
-            },
-            $this->data
-        );
+        return array_map(static fn($value) => $value, $this->data);
     }
 
     /**
@@ -228,8 +253,8 @@ trait Common
     /**
      * Sets an item at the offset.
      *
-     * @param mixed $offset Offset
      * @param mixed $value Value
+     * @param mixed $offset Offset
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
@@ -293,9 +318,9 @@ trait Common
      * Gets the next collection value.
      *
      */
-    public function next(): void
+    public function next(): mixed
     {
-        next($this->data);
+        return next($this->data);
     }
 
     /**

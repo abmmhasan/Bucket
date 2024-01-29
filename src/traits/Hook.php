@@ -42,7 +42,7 @@ trait Hook
     {
 
         $name = $this->getHookName($offset, $direction);
-        if (!in_array($callback, $this->hooks[$name] ?? [])) {
+        if (!in_array($callback, $this->hooks[$name] ?? [], true)) {
             $this->hooks[$name][] = $callback;
         }
         return $this;
