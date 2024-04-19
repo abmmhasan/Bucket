@@ -21,6 +21,6 @@
   "prefer-stable": true,
   "require": {
     "php": ">=8.0",
-    "abmmhasan/intermix": "^1.08"
+    "abmmhasan/intermix": "dev-main"
   }
 }
