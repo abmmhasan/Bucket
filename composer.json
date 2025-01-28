@@ -20,7 +20,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "php": ">=8.0",
-    "infocyph/intermix": "dev-main"
+    "php": ">=8.2",
+    "infocyph/intermix": "^4.01"
   }
 }
