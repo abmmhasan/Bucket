@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Infocyph\ArrayKit\Config;
 
-use Infocyph\InterMix\Fence\Multi;
-
 /**
  * Class Config
  *
@@ -16,5 +14,4 @@ use Infocyph\InterMix\Fence\Multi;
 class Config
 {
     use BaseConfigTrait;
-    use Multi;
 }
