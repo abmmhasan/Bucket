@@ -9,7 +9,7 @@
 ![GitHub Code Size](https://img.shields.io/github/languages/code-size/infocyph/arraykit)
 
 **ArrayKit** is a modern PHP 8.2+ library offering powerful array manipulation utilities, dynamic configuration management, and hookable “get/set” functionality.  
-It’s designed to handle everything from **simple, single-dimensional arrays** to **deeply nested** or multi-dimensional data structures. It also provides a flexible **config system** and **advanced hooking** for data transformation.
+It’s designed to handle everything from **simple, single-dimensional arrays** to **deeply nested** or multidimensional data structures. It also provides a flexible **config system** and **advanced hooking** for data transformation.
 
 ## Features
 
@@ -34,15 +34,12 @@ It’s designed to handle everything from **simple, single-dimensional arrays** 
 ## Requirements
 
 - **PHP 8.2** or above
-- (Optional) **Composer** for easy installation
 
 ## Installation
 
 ```bash
 composer require infocyph/arraykit
 ```
-
-*(If you have your package on Packagist or a private repository. Otherwise, clone the repo and include it in your autoloader.)*
 
 ## Quick Usage Examples
 
@@ -63,7 +60,34 @@ $duplicates = ArraySingle::duplicates($array); // [2]
 $pageData = ArraySingle::paginate($array, page:1, perPage:2); // [1, 2]
 ```
 
-### 2. Dot Notation
+### 2. Multi-Dimensional Array Helpers
+
+```php
+use Infocyph\ArrayKit\Array\ArrayMulti;
+
+$arr = [
+    [1, 2],
+    [3, 4, [5, 6]],
+];
+
+// Flatten the entire array to a single level
+$flattened = ArrayMulti::flatten($arr);
+// [1, 2, 3, 4, 5, 6]
+
+// Collapse one level (concatenate sub-arrays)
+$collapsed = ArrayMulti::collapse($arr);
+// [1, 2, 3, 4, [5, 6]]
+
+// Measure nesting depth
+$depth = ArrayMulti::depth($arr);
+// 3 (since there's a nested level [5, 6])
+
+// Sort recursively (ascending by default)
+$sorted = ArrayMulti::sortRecursive($arr);
+// After sorting each nested sub-array
+```
+
+### 3. Dot Notation
 
 ```php
 use Infocyph\ArrayKit\Array\DotNotation;
@@ -87,7 +111,7 @@ $flat = DotNotation::flatten($data);
 // [ 'user.profile.name' => 'Alice', 'user.profile.email' => 'alice@example.com' ]
 ```
 
-### 3. Dynamic Config with Hooks
+### 4. Dynamic Config with Hooks
 
 ```php
 use Infocyph\ArrayKit\Config\DynamicConfig;
@@ -111,7 +135,7 @@ $config->set('db.password', 'secret123');
 $hashedPassword = $config->get('db.password');
 ```
 
-### 4. Hooked Collection
+### 5. Hooked Collection
 
 ```php
 use Infocyph\ArrayKit\Functional\HookedCollection;
