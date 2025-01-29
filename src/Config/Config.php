@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AbmmHasan\Bucket\Config;
+namespace Infocyph\ArrayKit\Config;
 
-use AbmmHasan\InterMix\Fence\Multi;
+use Infocyph\InterMix\Fence\Multi;
 
 /**
  * Class Config
@@ -15,5 +15,6 @@ use AbmmHasan\InterMix\Fence\Multi;
  */
 class Config
 {
-    use BaseConfigTrait, Multi;
+    use BaseConfigTrait;
+    use Multi;
 }

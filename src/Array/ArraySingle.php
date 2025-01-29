@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbmmHasan\Bucket\Array;
+namespace Infocyph\ArrayKit\Array;
 
 /**
  * Class ArraySingle
@@ -190,7 +190,7 @@ class ArraySingle
      */
     public static function positive(array $array): array
     {
-        return static::where($array, static fn($value) => is_numeric($value) && $value > 0);
+        return static::where($array, static fn ($value) => is_numeric($value) && $value > 0);
     }
 
     /**
@@ -201,7 +201,7 @@ class ArraySingle
      */
     public static function negative(array $array): array
     {
-        return static::where($array, static fn($value) => is_numeric($value) && $value < 0);
+        return static::where($array, static fn ($value) => is_numeric($value) && $value < 0);
     }
 
     /**
@@ -295,7 +295,7 @@ class ArraySingle
     public static function where(array $array, ?callable $callback = null): array
     {
         $flag = ($callback !== null) ? ARRAY_FILTER_USE_BOTH : 0;
-        return array_filter($array, $callback ?? fn($val) => (bool) $val, $flag);
+        return array_filter($array, $callback ?? fn ($val) => (bool) $val, $flag);
     }
 
     /**

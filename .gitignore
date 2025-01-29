@@ -1,4 +1,9 @@
-/vendor/
+vendor
+example
 .idea
+example.php
+test.php
 composer.lock
-/example/
+git-story_media
+*~
+diffs.txt

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace AbmmHasan\Bucket\Functional;
+namespace Infocyph\ArrayKit\Functional;
 
 use ArrayAccess;
 use Countable;
 use Iterator;
 use JsonSerializable;
-use AbmmHasan\Bucket\traits\HookTrait;
+use Infocyph\ArrayKit\traits\HookTrait;
 
 /**
  * Class HookedCollection

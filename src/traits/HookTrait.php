@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbmmHasan\Bucket\traits;
+namespace Infocyph\ArrayKit\traits;
 
 /**
  * Trait HookTrait
@@ -63,7 +63,7 @@ trait HookTrait
     {
         $name = $this->getHookName((string) $offset, $direction);
 
-        if (!\in_array($callback, $this->hooks[$name] ?? [], true)) {
+        if (!in_array($callback, $this->hooks[$name] ?? [], true)) {
             $this->hooks[$name][] = $callback;
         }
 

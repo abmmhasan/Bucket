@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbmmHasan\Bucket\Functional;
+namespace Infocyph\ArrayKit\Functional;
 
 use ArrayIterator;
 use JsonSerializable;
@@ -79,17 +79,17 @@ trait BaseCollectionTrait
     /**
      * Merge another collection or array into this one.
      *
-     * @param BaseCollectionTrait|array $data Another collection instance or raw array
+     * @param BucketCollection|HookedCollection|array $data Another collection instance or raw array
      * @return static
      */
-    public function merge(BaseCollectionTrait|array $data): static
+    public function merge(BucketCollection|HookedCollection|array $data): static
     {
         // Convert collection to array if needed
-        if ($data instanceof BaseCollectionTrait) {
+        if ($data instanceof BucketCollection || $data instanceof HookedCollection) {
             $data = $data->items();
         }
 
-        $this->data = \array_merge($this->data, $data);
+        $this->data = array_merge($this->data, $data);
         return $this;
     }
 
@@ -101,7 +101,7 @@ trait BaseCollectionTrait
      */
     public function map(callable $callback): array
     {
-        return \array_map($callback, $this->data);
+        return array_map($callback, $this->data);
     }
 
     /**
@@ -113,7 +113,7 @@ trait BaseCollectionTrait
      */
     public static function fromMap(array $items, callable $fn): static
     {
-        return new static(\array_map($fn, $items));
+        return new static(array_map($fn, $items));
     }
 
     /**
@@ -125,7 +125,7 @@ trait BaseCollectionTrait
      */
     public function reduce(callable $fn, mixed $initial): mixed
     {
-        return \array_reduce($this->data, $fn, $initial);
+        return array_reduce($this->data, $fn, $initial);
     }
 
     /**
@@ -135,7 +135,7 @@ trait BaseCollectionTrait
      */
     public function each(callable $fn): void
     {
-        \array_walk($this->data, $fn);
+        array_walk($this->data, $fn);
     }
 
     /**
@@ -162,7 +162,7 @@ trait BaseCollectionTrait
      */
     public function filter(callable $fn): static
     {
-        $filtered = \array_filter($this->data, $fn, \ARRAY_FILTER_USE_BOTH);
+        $filtered = array_filter($this->data, $fn, ARRAY_FILTER_USE_BOTH);
         return new static($filtered);
     }
 
@@ -173,7 +173,7 @@ trait BaseCollectionTrait
      */
     public function first(): mixed
     {
-        return \reset($this->data);
+        return reset($this->data);
     }
 
     /**
@@ -183,7 +183,7 @@ trait BaseCollectionTrait
      */
     public function last(): mixed
     {
-        return \end($this->data);
+        return end($this->data);
     }
 
     /**
@@ -197,7 +197,7 @@ trait BaseCollectionTrait
         return match (true) {
             $items instanceof self => $items->items(),
             $items instanceof JsonSerializable => $items->jsonSerialize(),
-            $items instanceof Traversable => \iterator_to_array($items),
+            $items instanceof Traversable => iterator_to_array($items),
             default => (array) $items
         };
     }
@@ -221,7 +221,7 @@ trait BaseCollectionTrait
      */
     public function values(): array
     {
-        return \array_values($this->data);
+        return array_values($this->data);
     }
 
     /**
@@ -241,7 +241,7 @@ trait BaseCollectionTrait
      */
     public function jsonSerialize(): array
     {
-        return \array_map(
+        return array_map(
             static function ($value) {
                 if ($value instanceof JsonSerializable) {
                     return $value->jsonSerialize();
@@ -260,7 +260,7 @@ trait BaseCollectionTrait
     public function toArray(): array
     {
         // If you need a deeper serialization, you could do it here.
-        return \array_map(static fn($value) => $value, $this->data);
+        return array_map(static fn ($value) => $value, $this->data);
     }
 
     /**
@@ -271,7 +271,7 @@ trait BaseCollectionTrait
      */
     public function toJson(int $options = 0): string
     {
-        return \json_encode($this->data, $options);
+        return json_encode($this->data, $options);
     }
 
     /**
@@ -338,7 +338,7 @@ trait BaseCollectionTrait
      */
     public function offsetExists(mixed $offset): bool
     {
-        return isset($this->data[$offset]) || \array_key_exists($offset, $this->data);
+        return isset($this->data[$offset]) || array_key_exists($offset, $this->data);
     }
 
     /**
@@ -356,7 +356,7 @@ trait BaseCollectionTrait
      */
     public function rewind(): void
     {
-        \reset($this->data);
+        reset($this->data);
     }
 
     /**
@@ -366,7 +366,7 @@ trait BaseCollectionTrait
      */
     public function current(): mixed
     {
-        return \current($this->data);
+        return current($this->data);
     }
 
     /**
@@ -376,17 +376,17 @@ trait BaseCollectionTrait
      */
     public function key(): string|int|null
     {
-        return \key($this->data);
+        return key($this->data);
     }
 
+
     /**
-     * Iterator: Move forward to the next element.
+     * Iterator: Move forward to next element.
      *
-     * @return mixed
      */
-    public function next(): mixed
+    public function next(): void
     {
-        return \next($this->data);
+        next($this->data);
     }
 
     /**
@@ -396,7 +396,7 @@ trait BaseCollectionTrait
      */
     public function valid(): bool
     {
-        return \key($this->data) !== null;
+        return key($this->data) !== null;
     }
 
     /**
@@ -406,7 +406,7 @@ trait BaseCollectionTrait
      */
     public function count(): int
     {
-        return \count($this->data);
+        return count($this->data);
     }
 
     /**
@@ -416,7 +416,7 @@ trait BaseCollectionTrait
      */
     public function keys(): array
     {
-        return \array_keys($this->data);
+        return array_keys($this->data);
     }
 
     /**

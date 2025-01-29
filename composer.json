@@ -1,26 +1,73 @@
 {
-  "name": "abmmhasan/bucket",
-  "description": "PHP array functions",
+  "name": "infocyph/arraykit",
+  "description": "A Collection of useful PHP array functions.",
   "type": "library",
   "license": "MIT",
+  "keywords": [
+    "collection",
+    "array",
+    "config"
+  ],
   "authors": [
     {
       "name": "abmmhasan",
-      "email": "abmmhasan346@gmail.com"
+      "email": "abmmhasan@gmail.com"
     }
   ],
   "autoload": {
     "files": [
-      "src/function.php"
+      "src/functions.php"
     ],
     "psr-4": {
-      "AbmmHasan\\Bucket\\": "src/"
+      "Infocyph\\ArrayKit\\": "src/"
     }
   },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
+  "autoload-dev": {
+    "psr-4": {
+      "Infocyph\\ArrayKit\\Tests\\": "tests/"
+    }
+  },
   "require": {
     "php": ">=8.2",
     "infocyph/intermix": "^4.01"
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "config": {
+    "sort-packages": true,
+    "optimize-autoloader": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  },
+  "scripts": {
+    "test:code": "pest --parallel --processes=10",
+    "test:refactor": "rector process --dry-run",
+    "test:lint": "pint --test",
+    "test:hook": [
+      "captainhook hook:post-checkout",
+      "captainhook hook:pre-commit",
+      "captainhook hook:post-commit",
+      "captainhook hook:post-merge",
+      "captainhook hook:post-rewrite",
+      "captainhook hook:pre-push"
+    ],
+    "tests": [
+      "@test:code",
+      "@test:lint",
+      "@test:refactor"
+    ],
+    "git:hook": "captainhook install --only-enabled -nf",
+    "test": "pest",
+    "refactor": "rector process",
+    "lint": "pint",
+    "post-autoload-dump": "@git:hook"
+  },
+  "require-dev": {
+    "captainhook/captainhook": "^5.24",
+    "laravel/pint": "^1.20",
+    "pestphp/pest": "^3.7",
+    "rector/rector": "^2.0",
+    "symfony/var-dumper": "^7.2"
   }
 }

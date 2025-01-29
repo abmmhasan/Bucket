@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbmmHasan\Bucket\Functional;
+namespace Infocyph\ArrayKit\Functional;
 
 use ArrayAccess;
 use Countable;

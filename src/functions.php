@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use AbmmHasan\Bucket\Config\Config;
-use AbmmHasan\Bucket\Config\DynamicConfig;
+use Infocyph\ArrayKit\Config\Config;
+use Infocyph\ArrayKit\Config\DynamicConfig;
 
 if (!function_exists('compare')) {
     /**
@@ -41,7 +41,7 @@ if (!function_exists('isCallable')) {
      */
     function isCallable(mixed $value): bool
     {
-        return !\is_string($value) && \is_callable($value);
+        return !is_string($value) && is_callable($value);
     }
 }
 
@@ -55,11 +55,12 @@ if (!function_exists('config')) {
      *  - config('key'): gets the value of 'key'.
      *  - config('key', 'default'): gets the value of 'key', or 'default' if not found.
      *
-     * @param array|int|string|null $keys    If null, returns the Config instance.
+     * @param array|int|string|null $keys If null, returns the Config instance.
      *                                       If array, sets those key/value pairs.
      *                                       If string|int, retrieves that key's value.
-     * @param mixed|null            $default Default value if key not found
+     * @param mixed|null $default Default value if key not found
      * @return Config|mixed
+     * @throws Exception
      */
     function config(array|int|string $keys = null, mixed $default = null)
     {
@@ -69,7 +70,7 @@ if (!function_exists('config')) {
         }
 
         // If an array is passed, set each key => value
-        if (\is_array($keys)) {
+        if (is_array($keys)) {
             return Config::instance()->set($keys);
         }
 
@@ -88,9 +89,10 @@ if (!function_exists('formation')) {
      *  - formation('key'): retrieves the value of 'key'.
      *  - formation('key', 'default'): retrieves the value of 'key', or 'default' if missing.
      *
-     * @param array|int|string|null $key     The key(s) or null for the instance
-     * @param mixed|null            $default Default value if key not found
+     * @param array|int|string|null $key The key(s) or null for the instance
+     * @param mixed|null $default Default value if key not found
      * @return DynamicConfig|mixed
+     * @throws Exception
      */
     function formation(array|int|string $key = null, mixed $default = null)
     {
@@ -100,10 +102,10 @@ if (!function_exists('formation')) {
         }
 
         // If an array is passed, we assume a single key => value pair
-        if (\is_array($key)) {
+        if (is_array($key)) {
             // for consistency, let's set them all if it has multiple keys
             // or if you only want to set the first key, preserve the old logic
-            return DynamicConfig::instance()->set($key);
+            return DynamicConfig::instance()->set(...$key);
         }
 
         // Otherwise retrieve the key's value

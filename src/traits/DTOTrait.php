@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbmmHasan\Bucket\traits;
+namespace Infocyph\ArrayKit\traits;
 
 /**
  * Trait DTOTrait
@@ -37,7 +37,7 @@ trait DTOTrait
         $instance = new static();
 
         foreach ($values as $key => $value) {
-            if (\property_exists($instance, $key)) {
+            if (property_exists($instance, $key)) {
                 $instance->{$key} = $value;
             }
         }
@@ -54,6 +54,6 @@ trait DTOTrait
     {
         // get_object_vars($this) returns an associative array
         // of property name => value for all accessible (public) properties
-        return \get_object_vars($this);
+        return get_object_vars($this);
     }
 }

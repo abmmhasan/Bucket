@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbmmHasan\Bucket\Array;
+namespace Infocyph\ArrayKit\Array;
 
 /**
  * Class BaseArrayHelper
@@ -51,7 +51,7 @@ class BaseArrayHelper
      * @param callable $callback A callback with signature: fn($value, $key): bool
      * @return bool True if the callback returns true for any item
      */
-    public static function some(array $array, callable $callback): bool
+    public static function haveAny(array $array, callable $callback): bool
     {
         foreach ($array as $key => $value) {
             if ($callback($value, $key) === true) {
@@ -68,7 +68,7 @@ class BaseArrayHelper
      * @param callable $callback A callback with signature: fn($value, $key): bool
      * @return bool True if the callback returns true for every item
      */
-    public static function all(array $array, callable $callback): bool
+    public static function isAll(array $array, callable $callback): bool
     {
         foreach ($array as $key => $value) {
             if ($callback($value, $key) === false) {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbmmHasan\Bucket\Array;
+namespace Infocyph\ArrayKit\Array;
 
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
@@ -244,9 +244,7 @@ class ArrayMulti
             return empty($array) ? $default : $array;
         }
 
-        return array_filter($array, function ($item, $index) use ($callback) {
-            return $callback($item, $index);
-        }, ARRAY_FILTER_USE_BOTH);
+        return array_filter($array, fn ($item, $index) => $callback($item, $index), ARRAY_FILTER_USE_BOTH);
     }
 
     /**
@@ -304,11 +302,9 @@ class ArrayMulti
         return static::filter(
             $array,
             $column,
-            static function ($value) use ($callback, $isCallable) {
-                return $isCallable
-                    ? $callback($value)
-                    : $value == $callback;
-            }
+            static fn ($value) => $isCallable
+                ? $callback($value)
+                : $value == $callback
         );
     }
 
@@ -336,11 +332,9 @@ class ArrayMulti
         return static::filter(
             $array,
             $column,
-            static function ($value) use ($callback, $isCallable) {
-                return $isCallable
-                    ? !$callback($value)
-                    : $value != $callback;
-            }
+            static fn ($value) => $isCallable
+                ? !$callback($value)
+                : $value != $callback
         );
     }
 
@@ -364,14 +358,12 @@ class ArrayMulti
 
         // We'll build an array of just the column's values:
         // If the row is missing this column, we default to null
-        $temp = array_map(function ($row) use ($column) {
-            return $row[$column] ?? null;
-        }, $array);
+        $temp = array_map(fn ($row) => $row[$column] ?? null, $array);
 
         // If callback is null, filter out falsey values
         $filtered = array_filter(
             $temp,
-            $callback ?? static fn($val) => (bool) $val,
+            $callback ?? static fn ($val) => (bool) $val,
             ARRAY_FILTER_USE_BOTH
         );
 

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AbmmHasan\Bucket\Config;
+namespace Infocyph\ArrayKit\Config;
 
-use AbmmHasan\Bucket\Array\DotNotation;
+use Infocyph\ArrayKit\Array\DotNotation;
 
 /**
  * Trait BaseConfigTrait
@@ -27,8 +27,7 @@ trait BaseConfigTrait
      */
     public function loadFile(string $path): bool
     {
-        if (\count($this->items) === 0 && \file_exists($path)) {
-            // We assume the included file returns an array
+        if (count($this->items) === 0 && file_exists($path)) {
             $this->items = include $path;
             return true;
         }
@@ -43,7 +42,7 @@ trait BaseConfigTrait
      */
     public function loadArray(array $resource): bool
     {
-        if (\count($this->items) === 0) {
+        if (count($this->items) === 0) {
             $this->items = $resource;
             return true;
         }
@@ -74,13 +73,13 @@ trait BaseConfigTrait
     /**
      * Get one or multiple items from the configuration.
      *
-     * @param string|int|array|null $keys    Dot-notation key(s) or null for entire config
+     * @param string|int|array|null $key    Dot-notation key(s) or null for entire config
      * @param mixed|null            $default Default value if key not found
      * @return mixed The value(s) found or default
      */
-    public function get(string|int|array $keys = null, mixed $default = null): mixed
+    public function get(string|int|array $key = null, mixed $default = null): mixed
     {
-        return DotNotation::get($this->items, $keys, $default);
+        return DotNotation::get($this->items, $key, $default);
     }
 
     /**
@@ -88,13 +87,13 @@ trait BaseConfigTrait
      *
      * If no key is provided, replaces the entire config array with $value.
      *
-     * @param string|array|null $keys   Dot-notation key or [key => value] array
+     * @param string|array|null $key   Dot-notation key or [key => value] array
      * @param mixed|null        $value  The value to set
      * @return bool True on success
      */
-    public function set(string|array|null $keys = null, mixed $value = null): bool
+    public function set(string|array|null $key = null, mixed $value = null): bool
     {
-        return DotNotation::set($this->items, $keys, $value);
+        return DotNotation::set($this->items, $key, $value);
     }
 
     /**
@@ -107,7 +106,7 @@ trait BaseConfigTrait
     public function prepend(string $key, mixed $value): bool
     {
         $array = $this->get($key, []);
-        \array_unshift($array, $value);
+        array_unshift($array, $value);
         return $this->set($key, $array);
     }
 

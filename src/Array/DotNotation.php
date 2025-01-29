@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbmmHasan\Bucket\Array;
+namespace Infocyph\ArrayKit\Array;
 
 /**
  * Class DotNotation
@@ -190,7 +190,7 @@ class DotNotation
             }
 
             // Otherwise navigate the dot path.
-            $parts = explode('.', $key);
+            $parts = explode('.', (string) $key);
             $array = &$original;
             $count = count($parts);
 

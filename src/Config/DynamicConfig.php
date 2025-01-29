@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace AbmmHasan\Bucket\Config;
+namespace Infocyph\ArrayKit\Config;
 
-use AbmmHasan\Bucket\Array\DotNotation;
-use AbmmHasan\Bucket\traits\HookTrait;
-use AbmmHasan\InterMix\Fence\Multi;
+use Infocyph\ArrayKit\Array\DotNotation;
+use Infocyph\ArrayKit\traits\HookTrait;
+use Infocyph\InterMix\Fence\Multi;
 
 /**
  * Class DynamicConfig
