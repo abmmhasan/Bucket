@@ -28,8 +28,7 @@
     }
   },
   "require": {
-    "php": ">=8.2",
-    "infocyph/intermix": "^4.01"
+    "php": ">=8.2"
   },
   "minimum-stability": "stable",
   "prefer-stable": true,

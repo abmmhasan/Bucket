@@ -6,7 +6,6 @@ namespace Infocyph\ArrayKit\Config;
 
 use Infocyph\ArrayKit\Array\DotNotation;
 use Infocyph\ArrayKit\traits\HookTrait;
-use Infocyph\InterMix\Fence\Multi;
 
 /**
  * Class DynamicConfig
@@ -19,7 +18,6 @@ use Infocyph\InterMix\Fence\Multi;
 class DynamicConfig
 {
     use BaseConfigTrait;
-    use Multi;
     use HookTrait;
 
     /**
