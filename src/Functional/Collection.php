@@ -16,7 +16,7 @@ use JsonSerializable;
  * interfaces (ArrayAccess, Iterator, Countable, JsonSerializable).
  * Inherits most of its behavior from BaseCollectionTrait.
  */
-class BucketCollection implements ArrayAccess, Iterator, Countable, JsonSerializable
+class Collection implements ArrayAccess, Iterator, Countable, JsonSerializable
 {
     use BaseCollectionTrait;
 }
