@@ -222,7 +222,7 @@ class ArraySingle
      */
     public static function positive(array $array): array
     {
-        return static::where($array, static fn($value) => is_numeric($value) && $value > 0);
+        return static::where($array, static fn ($value) => is_numeric($value) && $value > 0);
     }
 
 
@@ -234,7 +234,7 @@ class ArraySingle
      */
     public static function negative(array $array): array
     {
-        return static::where($array, static fn($value) => is_numeric($value) && $value < 0);
+        return static::where($array, static fn ($value) => is_numeric($value) && $value < 0);
     }
 
 
@@ -347,7 +347,7 @@ class ArraySingle
     public static function where(array $array, ?callable $callback = null): array
     {
         $flag = ($callback !== null) ? \ARRAY_FILTER_USE_BOTH : 0;
-        return array_filter($array, $callback ?? fn($val) => (bool) $val, $flag);
+        return array_filter($array, $callback ?? fn ($val) => (bool) $val, $flag);
     }
 
 
@@ -606,7 +606,7 @@ class ArraySingle
      */
     public static function reject(array $array, mixed $callback = true): array
     {
-         return BaseArrayHelper::doReject($array, $callback);
+        return BaseArrayHelper::doReject($array, $callback);
     }
 
 
@@ -693,7 +693,7 @@ class ArraySingle
      */
     public static function skipUntil(array $array, callable $callback): array
     {
-        return static::skipWhile($array, fn($value, $key) => !$callback($value, $key));
+        return static::skipWhile($array, fn ($value, $key) => !$callback($value, $key));
     }
 
 

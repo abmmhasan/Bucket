@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Infocyph\ArrayKit\Config\Config;
-use Infocyph\ArrayKit\Config\DynamicConfig;
 
 if (!function_exists('compare')) {
     /**

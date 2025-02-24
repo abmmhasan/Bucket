@@ -9,7 +9,6 @@ use InvalidArgumentException;
 
 class BaseArrayHelper
 {
-
     /**
      * Check if an array is multi-dimensional.
      *
@@ -289,40 +288,6 @@ class BaseArrayHelper
 
 
     /**
-     * Dump the array (and optional extra args) and return the array.
-     *
-     * Useful for debugging.
-     *
-     * @param array $array The array to be dumped.
-     * @param mixed ...$args Any extra args to be dumped alongside the array.
-     * @return array The original array.
-     */
-    public static function dump(array $array, ...$args): array
-    {
-        var_dump($array, ...$args);
-        return $array;
-    }
-
-
-    /**
-     * Dump the array and any additional arguments, then terminate execution.
-     *
-     * This function is useful for debugging purposes. It outputs the
-     * contents of the given array and any additional arguments using
-     * `var_dump`, and then immediately stops script execution by calling `exit`.
-     *
-     * @param array $array The array to be dumped.
-     * @param mixed ...$args Additional arguments to be dumped.
-     * @return never This function does not return a value as it terminates execution.
-     */
-    public static function dd(array $array, ...$args): never
-    {
-        var_dump($array, ...$args);
-        exit(1);
-    }
-
-
-    /**
      * Remove one or multiple array items from an array.
      *
      * This function takes an array and a key or array of keys as parameters.
@@ -415,10 +380,10 @@ class BaseArrayHelper
         if (is_callable($callback)) {
             return array_filter(
                 $array,
-                fn($val, $key) => !$callback($val, $key),
+                fn ($val, $key) => !$callback($val, $key),
                 ARRAY_FILTER_USE_BOTH
             );
         }
-        return array_filter($array, fn($val) => $val != $callback);
+        return array_filter($array, fn ($val) => $val != $callback);
     }
 }

@@ -11,16 +11,15 @@ use Infocyph\ArrayKit\Array\BaseArrayHelper;
 class Pipeline
 {
     /**
-     * Internal array to be transformed.
-     */
-    protected array $working;
-
-    /**
      * Construct with an initial array.
      */
-    public function __construct(array $data, private readonly Collection $collection)
-    {
-        $this->working = $data;
+    public function __construct(
+        /**
+         * Internal array to be transformed.
+         */
+        protected array $working,
+        private readonly Collection $collection
+    ) {
     }
 
     /**

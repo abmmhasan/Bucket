@@ -13,8 +13,6 @@ trait BaseCollectionTrait
 {
     /**
      * Holds the underlying array data for the collection.
-     *
-     * @var array
      */
     protected array $data = [];
 
@@ -23,7 +21,7 @@ trait BaseCollectionTrait
     /**
      * Constructor. Initializes the collection with the given array data.
      *
-     * @param array $data The initial data for the collection.
+     * @param  array  $data  The initial data for the collection.
      */
     public function __construct(array $data = [])
     {
@@ -32,14 +30,12 @@ trait BaseCollectionTrait
 
     /**
      * Create a new collection instance from any arrayable input.
-     *
-     * @param mixed $data
-     * @return static
      */
     public static function make(mixed $data): static
     {
         $instance = new static([]);
         $instance->data = $instance->getArrayableItems($data);
+
         return $instance;
     }
 
@@ -49,9 +45,8 @@ trait BaseCollectionTrait
      * If a method isn't defined on the collection, the call is forwarded to
      * a new Pipeline instance (which offers a rich, chainable API).
      *
-     * @param string $method
-     * @param array $arguments
      * @return Pipeline|mixed
+     *
      * @throws BadMethodCallException
      */
     public function __call(string $method, array $arguments): mixed
@@ -60,15 +55,13 @@ trait BaseCollectionTrait
         if (method_exists($pipeline, $method)) {
             return $pipeline->$method(...$arguments);
         }
-        throw new BadMethodCallException("Method $method does not exist in " . static::class);
+        throw new BadMethodCallException("Method $method does not exist in ".static::class);
     }
 
     /**
      * Magic method __invoke allows the instance to be called as a function.
      *
      * When the collection object is used as a function, it returns the underlying data array.
-     *
-     * @return array
      */
     public function __invoke(): array
     {
@@ -92,12 +85,13 @@ trait BaseCollectionTrait
      * Set the underlying array data for the collection.
      * This method is chainable.
      *
-     * @param array $data The new data to set.
+     * @param  array  $data  The new data to set.
      * @return static The current collection instance, for chaining.
      */
     public function setData(array $data): static
     {
         $this->data = $data;
+
         return $this;
     }
 
@@ -116,9 +110,6 @@ trait BaseCollectionTrait
 
     /**
      * Magic getter to retrieve an item via property access: $collection->key
-     *
-     * @param string $key
-     * @return mixed
      */
     public function __get(string $key): mixed
     {
@@ -127,9 +118,6 @@ trait BaseCollectionTrait
 
     /**
      * Magic setter to set an item via property access: $collection->key = value
-     *
-     * @param string $key
-     * @param mixed $value
      */
     public function __set(string $key, mixed $value): void
     {
@@ -138,9 +126,6 @@ trait BaseCollectionTrait
 
     /**
      * Magic isset to check existence of an item via property access: isset($collection->key)
-     *
-     * @param string $key
-     * @return bool
      */
     public function __isset(string $key): bool
     {
@@ -149,8 +134,6 @@ trait BaseCollectionTrait
 
     /**
      * Magic unset to remove an item via property access: unset($collection->key)
-     *
-     * @param string $key
      */
     public function __unset(string $key): void
     {
@@ -159,9 +142,6 @@ trait BaseCollectionTrait
 
     /**
      * Convert various structures (collections, Traversable, etc.) to an array.
-     *
-     * @param mixed $items
-     * @return array
      */
     public function getArrayableItems(mixed $items): array
     {
@@ -169,14 +149,12 @@ trait BaseCollectionTrait
             $items instanceof self => $items->items(),
             $items instanceof JsonSerializable => $items->jsonSerialize(),
             $items instanceof Traversable => iterator_to_array($items),
-            default => (array)$items,
+            default => (array) $items,
         };
     }
 
     /**
      * Return the raw array of items in this collection.
-     *
-     * @return array
      */
     public function items(): array
     {
@@ -186,8 +164,7 @@ trait BaseCollectionTrait
     /**
      * Get the collection of items as a JSON string.
      *
-     * @param int $options JSON encoding options
-     * @return string
+     * @param  int  $options  JSON encoding options
      */
     public function toJson(int $options = 0): string
     {
@@ -196,8 +173,6 @@ trait BaseCollectionTrait
 
     /**
      * Determine if the collection is empty.
-     *
-     * @return bool
      */
     public function isEmpty(): bool
     {
@@ -206,8 +181,6 @@ trait BaseCollectionTrait
 
     /**
      * Convert the collection to a JSON string when treated as a string.
-     *
-     * @return string
      */
     public function __toString(): string
     {
@@ -216,8 +189,6 @@ trait BaseCollectionTrait
 
     /**
      * Get the collection of items as a plain array.
-     *
-     * @return array
      */
     public function toArray(): array
     {
@@ -226,8 +197,6 @@ trait BaseCollectionTrait
 
     /**
      * Return an array of all the keys in the collection.
-     *
-     * @return array
      */
     public function keys(): array
     {
@@ -236,8 +205,6 @@ trait BaseCollectionTrait
 
     /**
      * Provide custom debug information.
-     *
-     * @return array
      */
     public function __debugInfo(): array
     {
@@ -249,8 +216,6 @@ trait BaseCollectionTrait
 
     /**
      * Clear all items from the collection.
-     *
-     * @return void
      */
     public function clear(): void
     {
@@ -343,7 +308,7 @@ trait BaseCollectionTrait
     public function jsonSerialize(): array
     {
         return array_map(
-            static fn($value) => $value instanceof JsonSerializable ? $value->jsonSerialize() : $value,
+            static fn ($value) => $value instanceof JsonSerializable ? $value->jsonSerialize() : $value,
             $this->data,
         );
     }

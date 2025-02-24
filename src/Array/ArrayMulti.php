@@ -222,11 +222,9 @@ class ArrayMulti
      */
     public static function between(array $array, string $key, float|int $from, float|int $to): array
     {
-        return array_filter($array, function ($item) use ($from, $to, $key) {
-            return ArraySingle::exists($item, $key)
-                && compare($item[$key], $from, '>=')
-                && compare($item[$key], $to, '<=');
-        });
+        return array_filter($array, fn ($item) => ArraySingle::exists($item, $key)
+            && compare($item[$key], $from, '>=')
+            && compare($item[$key], $to, '<='));
     }
 
 
@@ -247,7 +245,7 @@ class ArrayMulti
         if ($callback === null) {
             return empty($array) ? $default : $array;
         }
-        return array_filter($array, fn($item, $index) => $callback($item, $index), \ARRAY_FILTER_USE_BOTH);
+        return array_filter($array, fn ($item, $index) => $callback($item, $index), \ARRAY_FILTER_USE_BOTH);
     }
 
 
@@ -271,9 +269,7 @@ class ArrayMulti
             $operator = null;
         }
 
-        return array_filter($array, function ($item) use ($value, $key, $operator) {
-            return ArraySingle::exists($item, $key) && compare($item[$key], $value, $operator);
-        });
+        return array_filter($array, fn ($item) => ArraySingle::exists($item, $key) && compare($item[$key], $value, $operator));
     }
 
     /**
@@ -486,9 +482,9 @@ class ArrayMulti
         // Could unify via BaseArrayHelper::doReject($array, $callback).
         // Or keep local logic:
         if (is_callable($callback)) {
-            return array_filter($array, fn($row, $key) => !$callback($row, $key), \ARRAY_FILTER_USE_BOTH);
+            return array_filter($array, fn ($row, $key) => !$callback($row, $key), \ARRAY_FILTER_USE_BOTH);
         }
-        return array_filter($array, fn($row) => $row != $callback);
+        return array_filter($array, fn ($row) => $row != $callback);
     }
 
 
@@ -583,7 +579,7 @@ class ArrayMulti
      */
     public static function skipUntil(array $array, callable $callback): array
     {
-        return static::skipWhile($array, fn($row, $key) => !$callback($row, $key));
+        return static::skipWhile($array, fn ($row, $key) => !$callback($row, $key));
     }
 
 
@@ -629,7 +625,9 @@ class ArrayMulti
      */
     public static function whereIn(array $array, string $key, array $values, bool $strict = false): array
     {
-        return array_filter($array, fn($row)
+        return array_filter(
+            $array,
+            fn ($row)
             => isset($row[$key]) && in_array($row[$key], $values, $strict),
         );
     }
@@ -646,7 +644,9 @@ class ArrayMulti
      */
     public static function whereNotIn(array $array, string $key, array $values, bool $strict = false): array
     {
-        return array_filter($array, fn($row)
+        return array_filter(
+            $array,
+            fn ($row)
             => !isset($row[$key]) || !in_array($row[$key], $values, $strict),
         );
     }
@@ -664,7 +664,9 @@ class ArrayMulti
      */
     public static function whereNull(array $array, string $key): array
     {
-        return array_filter($array, fn($row)
+        return array_filter(
+            $array,
+            fn ($row)
             => !empty($row) && array_key_exists($key, $row) && $row[$key] === null,
         );
     }
@@ -682,7 +684,7 @@ class ArrayMulti
      */
     public static function whereNotNull(array $array, string $key): array
     {
-        return array_filter($array, fn($row) => isset($row[$key]));
+        return array_filter($array, fn ($row) => isset($row[$key]));
     }
 
 
