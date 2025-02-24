@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Infocyph\ArrayKit\Collection;
 
 use ArrayIterator;
+use BadMethodCallException;
 use JsonSerializable;
 use Traversable;
 
@@ -12,9 +13,12 @@ trait BaseCollectionTrait
 {
     /**
      * Holds the underlying array data for the collection.
+     *
+     * @var array
      */
     protected array $data = [];
 
+    protected Pipeline $pipeline;
 
     /**
      * Constructor. Initializes the collection with the given array data.
@@ -26,6 +30,50 @@ trait BaseCollectionTrait
         $this->data = $data;
     }
 
+    /**
+     * Create a new collection instance from any arrayable input.
+     *
+     * @param mixed $data
+     * @return static
+     */
+    public static function make(mixed $data): static
+    {
+        $instance = new static([]);
+        $instance->data = $instance->getArrayableItems($data);
+        return $instance;
+    }
+
+    /**
+     * Magic method __call to delegate undefined method calls.
+     *
+     * If a method isn't defined on the collection, the call is forwarded to
+     * a new Pipeline instance (which offers a rich, chainable API).
+     *
+     * @param string $method
+     * @param array $arguments
+     * @return Pipeline|mixed
+     * @throws BadMethodCallException
+     */
+    public function __call(string $method, array $arguments): mixed
+    {
+        $pipeline = $this->process();
+        if (method_exists($pipeline, $method)) {
+            return $pipeline->$method(...$arguments);
+        }
+        throw new BadMethodCallException("Method $method does not exist in " . static::class);
+    }
+
+    /**
+     * Magic method __invoke allows the instance to be called as a function.
+     *
+     * When the collection object is used as a function, it returns the underlying data array.
+     *
+     * @return array
+     */
+    public function __invoke(): array
+    {
+        return $this->data;
+    }
 
     /**
      * Create and return a new Pipeline instance using the current collection's data.
@@ -37,7 +85,7 @@ trait BaseCollectionTrait
      */
     public function process(): Pipeline
     {
-        return new Pipeline($this->data, $this);
+        return $this->pipeline ??= new Pipeline($this->data, $this);
     }
 
     /**
@@ -52,7 +100,6 @@ trait BaseCollectionTrait
         $this->data = $data;
         return $this;
     }
-
 
     /**
      * Retrieve the current collection instance.
@@ -122,7 +169,7 @@ trait BaseCollectionTrait
             $items instanceof self => $items->items(),
             $items instanceof JsonSerializable => $items->jsonSerialize(),
             $items instanceof Traversable => iterator_to_array($items),
-            default => (array)$items
+            default => (array)$items,
         };
     }
 
@@ -168,7 +215,7 @@ trait BaseCollectionTrait
     }
 
     /**
-     * Get the collection of items as a plain array (same as items()).
+     * Get the collection of items as a plain array.
      *
      * @return array
      */
@@ -188,6 +235,19 @@ trait BaseCollectionTrait
     }
 
     /**
+     * Provide custom debug information.
+     *
+     * @return array
+     */
+    public function __debugInfo(): array
+    {
+        return [
+            'data' => $this->data,
+            'count' => $this->count(),
+        ];
+    }
+
+    /**
      * Clear all items from the collection.
      *
      * @return void
@@ -196,13 +256,13 @@ trait BaseCollectionTrait
     {
         $this->data = [];
     }
+
     /*
     |--------------------------------------------------------------------------
-    | Interface Implementations (ArrayAccess, Iterator, Countable, JsonSerializable)
+    | ArrayAccess Interface
     |--------------------------------------------------------------------------
     */
 
-    // ArrayAccess
     public function offsetExists(mixed $offset): bool
     {
         return isset($this->data[$offset]) || array_key_exists($offset, $this->data);
@@ -227,7 +287,12 @@ trait BaseCollectionTrait
         unset($this->data[$offset]);
     }
 
-    // Iterator
+    /*
+    |--------------------------------------------------------------------------
+    | Iterator Interface
+    |--------------------------------------------------------------------------
+    */
+
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->data);
@@ -258,27 +323,27 @@ trait BaseCollectionTrait
         reset($this->data);
     }
 
-    // Countable
+    /*
+    |--------------------------------------------------------------------------
+    | Countable Interface
+    |--------------------------------------------------------------------------
+    */
+
     public function count(): int
     {
         return count($this->data);
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | JsonSerializable Interface
+    |--------------------------------------------------------------------------
+    */
 
-    /**
-     * Specify data which should be serialized to JSON.
-     *
-     * @return array
-     */
     public function jsonSerialize(): array
     {
         return array_map(
-            static function ($value) {
-                if ($value instanceof JsonSerializable) {
-                    return $value->jsonSerialize();
-                }
-                return $value;
-            },
+            static fn($value) => $value instanceof JsonSerializable ? $value->jsonSerialize() : $value,
             $this->data,
         );
     }
