@@ -8,16 +8,6 @@ use Infocyph\ArrayKit\Array\ArraySingle;
 use Infocyph\ArrayKit\Array\ArrayMulti;
 use Infocyph\ArrayKit\Array\BaseArrayHelper;
 
-/**
- * Class Pipeline
- *
- * A chainable "pipeline" of array operations referencing
- * ArraySingle, ArrayMulti, and optionally BaseArrayHelper.
- *
- * Each chainable method modifies $this->working, then returns $this
- * for fluent chaining. Some methods (like sum) or first/last might
- * return a single value, ending the chain.
- */
 class Pipeline
 {
     /**
@@ -406,8 +396,6 @@ class Pipeline
      */
     public function any(callable $callback): bool
     {
-        // If single-dim usage:
         return ArraySingle::some($this->working, $callback);
-        // or if multi-dim usage, you might do ArrayMulti::some(...).
     }
 }
