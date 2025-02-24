@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Infocyph\ArrayKit\Functional;
+namespace Infocyph\ArrayKit\Collection;
 
 use ArrayIterator;
 use JsonSerializable;
@@ -15,39 +15,52 @@ trait BaseCollectionTrait
      */
     protected array $data = [];
 
+
     /**
-     * Construct with optional initial data array.
+     * Constructor. Initializes the collection with the given array data.
+     *
+     * @param array $data The initial data for the collection.
      */
     public function __construct(array $data = [])
     {
         $this->data = $data;
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Pipeline / Finalization
-    |--------------------------------------------------------------------------
-    */
 
     /**
-     * Start a chain of operations on this collection's array data.
-     * Creates a new "Pipeline" instance that allows chainable transformations.
+     * Create and return a new Pipeline instance using the current collection's data.
+     *
+     * This method initializes a processing pipeline, allowing method chaining
+     * for array transformations or operations.
+     *
+     * @return Pipeline A new pipeline instance for further processing.
      */
     public function process(): Pipeline
     {
         return new Pipeline($this->data, $this);
     }
 
+    /**
+     * Set the underlying array data for the collection.
+     * This method is chainable.
+     *
+     * @param array $data The new data to set.
+     * @return static The current collection instance, for chaining.
+     */
     public function setData(array $data): static
     {
         $this->data = $data;
         return $this;
     }
 
+
     /**
-     * Return a fresh DataCollection containing the current array.
+     * Retrieve the current collection instance.
      *
-     * Possibly used if you do in-place modifications and want a new final collection.
+     * This method returns the current collection object itself, allowing
+     * for further method chaining or operations on the existing collection.
+     *
+     * @return static The current collection instance.
      */
     public function get(): static
     {
@@ -152,6 +165,16 @@ trait BaseCollectionTrait
     public function __toString(): string
     {
         return $this->toJson();
+    }
+
+    /**
+     * Get the collection of items as a plain array (same as items()).
+     *
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return $this->data;
     }
 
     /**

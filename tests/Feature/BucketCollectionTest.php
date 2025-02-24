@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Infocyph\ArrayKit\Functional\Collection;
+use Infocyph\ArrayKit\Collection\Collection;
 
 it('can be instantiated with array data', function () {
     $collection = new Collection(['a' => 1, 'b' => 2]);
